@@ -1,0 +1,49 @@
+.busstop-contentBox {
+  width: 90%;
+  background-color: #ffffff;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  margin: 100px auto 10px;
+  max-width: 980px;
+  padding: 12px 0;
+}
+
+.busstop-leftbox {
+  width: 49px;
+  background-color: #dadedb;
+  color: #ffffff;
+  border-radius: 15px;
+  writing-mode: vertical-lr;
+  padding: 20px;
+  position: relative;
+  min-height: 100px;
+}
+
+.busstop-leftbox > p {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  letter-spacing: 5px;
+  font-size: 21px;
+}
+
+.busstop-textwrap {
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  margin-left: 10%;
+}
+
+.busstop-title {
+  font-size: 23px;
+}
+
+.busstop-number {
+  font-size: 20px;
+  color: #bcb9b9;
+}
+
+.busstop-adress {
+  font-size: 20px;
+}
