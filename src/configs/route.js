@@ -1,9 +1,9 @@
 // src/configs/route.js
 const route = {
   home: "/",
-  busList: "/bus",
-  busShow: (id) => `/bus/${id}`,
-  // 필요하면 여기에 더 추가...
+  subwaySearch: "/subway/search",   // 역명 검색
+  subwayLines: "/subway/lines",     // 노선별 역 보기
+  subwayRealtime: "/subway/realtime", // (선택) 실시간 위치
 };
 
-export default route; // ✅ default export
+export default route;

@@ -80,7 +80,6 @@ export default function Map() {
           kakao.maps.event.addListener(marker, "click", () => iw.open(map, marker));
         });
       },
-      opt
     );
   }
 

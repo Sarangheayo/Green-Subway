@@ -11,7 +11,7 @@ function Header() {
       <div className="ham-imgbox" onClick={() => setVisible(true)}>
         <img src="/ham.png" alt="햄버거네비이미지" />
       </div>
-      <p>Green travel</p>
+      <p>Green Subway</p>
       <div className="home-imgbox" onClick={() => { navigate("/"); }}>
         <img src="/home.png" alt="홈으로 돌아가기 이미지" />
       </div>
@@ -21,8 +21,8 @@ function Header() {
             <img src="/bus.png" alt="로고이미지" />
           </div>
           <div className="navTextWrap">
-            <p onClick={() => { navigate("/map"); setVisible(false); }}>길찾기</p>
-            <p onClick={() => { navigate("/busstop"); setVisible(false); }}>정류장</p>
+            <p onClick={() => { navigate("/map"); setVisible(false); }}>지하철 역 찾기</p>
+            <p onClick={() => { navigate("/busstop"); setVisible(false); }}></p>
             <p onClick={() => { navigate("/bus"); setVisible(false); }}>버스</p>
             <p onClick={() => { navigate("/tools/address"); setVisible(false); }}>주소 검색</p>
           </div>

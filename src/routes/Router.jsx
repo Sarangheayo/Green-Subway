@@ -1,45 +1,28 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import App from "../App.jsx";
+import Main from "../components/Main.jsx";
+import Map from "../components/Map.jsx";
 
-import { createBrowserRouter,RouterProvider } from "react-router-dom";
-import App from "../App.jsx"
-// import BusStopList from "../components/BusStopList.jsx";
-import Main from "../components/Main.jsx"
-import Map from "../components/Map.jsx"
-// import BusList from "../components/BusList.jsx"
-// import BusListDetail from "../components/BusListDetail.jsx";
+import SubwayLineOnMap from "../components/SubwayLineOnMap.jsx";
+import SubwaySearchByName from "../components/SubwaySearchByName.jsx";
+import SubwayRealtime from "../components/SubwayRealtime.jsx";    
 import AddressLookup from "../components/AddressLookup.jsx";
-import SubwayPosition from "../components/SubwayPosition.jsx";
 
 const router = createBrowserRouter([
-    {
-        element: <App/>,
-        children : [
-            {
-                path: '/',
-                element:<Main/>
-            },
-            {
-                path: '/map',
-                element:<Map/>
-            },
-            {
-                path: 'subway',
-                element:<SubwayPosition/>
-            },
-            {
-                path: "/tools/address",
-                element: <AddressLookup />
-            },
-            {
-                path: "*",
-                element: <Main />
-            },
-
-        ]
-    }
+  {
+    element: <App />,
+    children: [
+      { path: "/", element: <Main /> },
+      { path: "/map", element: <Map /> },
+      { path: "/subway", element: <SubwayRealtime /> },
+      { path: "/subway/lines", element: <SubwayLineOnMap /> },
+      { path: "/subway/search", element: <SubwaySearchByName /> },
+      { path: "/tools/address", element: <AddressLookup /> },
+      { path: "*", element: <Main /> },
+    ],
+  },
 ]);
 
-function Router(){
-    return <RouterProvider router={router}/>
+export default function Router() {
+  return <RouterProvider router={router} />;
 }
-
-export default Router;
