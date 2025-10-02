@@ -1,0 +1,110 @@
+/* 네비 */
+.subwaydetail2-nav{
+ width:100%;
+ height:100px;
+ background-color: #54DCC1;
+ display: flex;
+ justify-content: space-around;
+ align-items: center;
+ padding-top: 10px;
+}
+.subwaydetail2-item{
+    width:20%;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.subwaydetail2-contentwrap{
+    margin:0 auto;
+    text-align: center;
+    width:100px;
+    height:100px;
+    padding-top: 10px;
+
+    
+}
+.subwaydetail2-contentwrap > p{
+    font-size: 20px;
+    font-weight: 600;
+}
+.subwaydetail2-imgBbox{
+    text-align: center;
+    width:50px;
+    margin: 0 auto;
+}
+
+.subwaydetail2-imgBbox > img{
+    width:100%;
+}
+
+.subwaydetail2-whiteline{
+    width:100%;
+    height:7px;
+    border-radius: 7px;
+    transform: translateY(-5px);
+    
+}
+.check{
+    background-color: white;
+}
+/* 타이틀 */
+.subwaydetail2-titlebox{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    
+}
+.subwaydetail2-colorname{
+    width:30%;
+    height:13px;
+    background-color: #54DCC1;
+}
+.subwaydetail2-titlebox>h1{
+    color: white;
+    transform: translateY(-10px);
+    
+    
+}
+
+.subwaydetail2-numbersbox{
+    width:50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 50px auto;
+
+
+
+}
+.subwaydetail2-item{text-align: center;}
+.subwaydetail2-underline {
+    width:100%;
+    height:6px;
+}
+.greencheck{
+    background-color: #54DCC1;
+}
+
+/* 아래는 list들  */
+.subwaydetail2-listitem{
+max-width: 350px;
+display: flex;
+justify-content: space-between;
+margin: 0 auto;
+color: white;
+margin-top : 20px;
+
+}
+
+.subwaydetail-textwrap > p{
+    margin-top: 3px;
+}
+p >span{
+    color: red;
+}
+.subwaydetail2-array{
+    margin-top: 20px;
+}

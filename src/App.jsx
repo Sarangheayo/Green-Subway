@@ -1,19 +1,17 @@
+
 import './App.css'
-import Header from './components/Header.jsx'
-import { Outlet, ScrollRestoration } from 'react-router-dom';
- 
+import { Outlet, ScrollRestoration } from 'react-router-dom'
 
 function App() {
 
   return (
     <>
-      <Header />
       <main>
-        <Outlet />
+        <Outlet/>
       </main>
-      <ScrollRestoration />
+      <ScrollRestoration></ScrollRestoration>
     </>
   )
 }
 
-export default App;
+export default App

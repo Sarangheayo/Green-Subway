@@ -1,98 +1,21 @@
-header {
-  width: 100vw;
-  height: 82px;
-  background-color: #7aaa89;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  z-index: 10;
+.header-container{
+    width:100%;
+    height: 66px;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    
 }
+.header-back{
+    width:25px;
+    cursor: pointer;
 
-header > p {
-  font-size: 25px;
-  font-weight: bold;
-  color: #ffffff;
 }
-
-/* 햄버거 버튼/홈 아이콘 컨테이너(필요시 이미지 박스 스타일 추가) */
-.ham-imgbox {
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
+.header-home{
+    width:40px;
+    cursor: pointer;
 }
-
-.ham-imgbox > img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.home-imgbox {
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-}
-
-.home-imgbox > img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* 네비게이션 */
-.nav {
-  position: fixed;
-  display: flex;
-  left: -300px;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  transform: translateX(-100%);
-  transition: all 0.5s ease;
-  z-index: 20;
-}
-
-.nav.show {
-  left: 0px;
-  transform: translateX(0%);
-}
-
-.navbox {
-  width: 70%;
-  height: 100%;
-  background-color: #7aaa89;
-  padding-top: 40px;
-}
-
-.backbox {
-  width: 30%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.navLogoImgBox {
-  width: 200px;
-  margin: 0 auto 16px;
-}
-
-.navLogoImgBox > img {
-  width: 100%;
-  height: auto;
-}
-
-.navTextWrap {
-  width: 140px;
-  margin: 0 auto;
-}
-
-.navTextWrap > p {
-  font-size: 30px;
-  font-weight: bold;
-  color: #ffffff;
-  margin-top: 20px;
-  cursor: pointer;
+.header-home>img{width:100%}
+.header-back>img{
+    width:100%;
 }

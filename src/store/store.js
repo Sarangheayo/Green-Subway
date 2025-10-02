@@ -1,12 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
-import kakaoReducer from "./slices/kakaoSlice.js";
-import subwayReducer from "./slices/subwaySlice";
+import { configureStore } from "@reduxjs/toolkit"
+import subwaystationReducer from './slices/subwaystationSlice.js'
+import subwatstationidReducer from './slices/subwayIdSlice.js'
+import subwaystationListDetailReducer from "./slices/subwaystaionListDetailSlice.js";
 
-export const store = configureStore({
-  reducer: {
-     kakao: kakaoReducer,
-     subway: subwayReducer
-    },
+export default configureStore({
+  reducer:{
+    subwaystation : subwaystationReducer,
+    subwayid : subwatstationidReducer,
+    subwaystationListDetail : subwaystationListDetailReducer,
+  }
 });
-
-export default store;
