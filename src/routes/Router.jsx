@@ -1,13 +1,11 @@
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import App from "../App";
-import MapPage from "../components/MapPage.jsx";
+import Main from "../components/Main.jsx";
 import SubwayStationList from "../components/SubwayStationList.jsx";
-import SubwayDetail1 from "../components/SubwayDetail1.jsx";
-import SubwayDetail2 from "../components/SubwayDetail2.jsx";
-import TimeLine from "../components/TimeLine.jsx";
-import StartEnd from "../components/StartEnd.jsx";
-import TimeLine2 from "../components/TimeLine2.jsx";
-import StartEnd2 from "../components/StartEnd2.jsx";
+import SubwayDetail from "../components/SubwayDetail.jsx";
+import MapPage from '../components/MapPage.jsx';
+import StationSearch from "../components/StationSearchbar.jsx"; // 추가
+
 
 const router = createBrowserRouter([
     {
@@ -15,33 +13,25 @@ const router = createBrowserRouter([
         children : [
             {
                 path: '/',
-                element: <MapPage/>
+                element: <Main/>
             },
             {
                 path: '/subwaystationlist',
                 element: <SubwayStationList/>
             },
             {
-                path: '/subwaydetail1/:subwayStationId',
-                element: <SubwayDetail1/>
+                path: '/subwaystationsearchbar',
+                element: <StationSearch />
             },
             {
-                path: '/subwaydetail2',
-                element: <SubwayDetail2/>
-            },{
-                path: '/timeline',
-                element: <TimeLine/>
-            },{
-                path: '/startend',
-                element: <StartEnd/>
-            },{
-                path: '/startend2',
-                element: <StartEnd2/>
-                
-            },{
-                path: '/timeline2',
-                element: <TimeLine2/>
+                path: '/subwaydetail/:subwayStationId',
+                element: <SubwayDetail/>
+            },
+            {
+                path: '/mappage',
+                element: <MapPage/>
             }
+           
         ]
         
     }

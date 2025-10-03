@@ -2,74 +2,57 @@ import { createSlice } from "@reduxjs/toolkit";
 import { subwaystationIndex } from "../thunks/subwaystationThunk.js";
 
 const initialState = {
-  _raw: [],
-  list: [],
-  qLocal: "",
-  total: 0,
-  loading: false,
-  error: null,
+  list: [],      // 화면에 뿌릴 현재 리스트
+  listAll: [],   // 검색 기준 원본
+  qLocal: "",    // 로컬 검색어(스토어 저장)
 };
 
-function norm(v) {
-  return (v ?? "").toString().replace(/\s+/g, "").toLowerCase();
-}
-function matches(item, q) {
-  if (!q) return true;
-  const n = norm(q);
-  const cands = [
-    item.STATION_NM,
-    item.statnNm,
-    item.LINE_NUM,
-    item.FR_CODE,
-    item.subwayNm,
-    item.trainLineNm,
-    item.subwayList,
-    item.subwayId,
-    item.STATION_CD,
-    item.statnId,
-  ];
-  return cands.some((f) => norm(f).includes(n));
-}
-function filterList(raw, q) {
-  if (!q) return raw;
-  return raw.filter((it) => matches(it, q));
-}
-
-const slice = createSlice({
+const subwaystationSlice = createSlice({
   name: "subwaystationSlice",
   initialState,
   reducers: {
-    applyLocalFilter(state, action) {
-      const q = (action.payload ?? "").toString().trim();
+    // 로컬 필터 적용 (부분 일치: 역명/노선/코드)
+    applyLocalFilter(state, { payload }) {
+      const q = String(payload ?? "").trim().toLowerCase();
       state.qLocal = q;
-      state.list = filterList(state._raw, q);
+
+      const base = state.listAll; // 이미 불러온 원본만 기준으로 필터
+      state.list = !q
+        ? base.slice()
+        : base.filter((it) => {
+            // 대/소문자 키 모두 지원
+            const name = String(it?.stationNm ?? it?.STATION_NM ?? "").toLowerCase();
+            const line = String(it?.lineNum   ?? it?.LINE_NUM   ?? it?.subwayNm ?? "").toLowerCase();
+            const fr   = String(it?.frCode    ?? it?.FR_CODE    ?? "").toLowerCase();
+            return name.includes(q) || line.includes(q) || fr.includes(q);
+          });
     },
+
+    // 로컬 필터 해제
     clearLocalFilter(state) {
       state.qLocal = "";
-      state.list = state._raw;
+      state.list = state.listAll.slice();
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(subwaystationIndex.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(subwaystationIndex.fulfilled, (state, action) => {
-        const arr = Array.isArray(action.payload)
-          ? action.payload
-          : action.payload?.list ?? [];
-        state._raw = Array.isArray(arr) ? arr : [];
-        state.list = filterList(state._raw, state.qLocal);
-        state.total = state._raw.length;
-        state.loading = false;
-      })
-      .addCase(subwaystationIndex.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error?.message || "fetch failed";
-      });
+
+  extraReducers: (b) => {
+    // API 성공 시: listAll 최신화 + qLocal 유지해서 list 재계산
+    b.addCase(subwaystationIndex.fulfilled, (state, { payload }) => {
+      const arr = Array.isArray(payload) ? payload : [];
+      state.listAll = arr.slice();
+
+      const q = String(state.qLocal || "").trim().toLowerCase();
+      state.list = !q
+        ? arr.slice()
+        : arr.filter((it) => {
+            const name = String(it?.stationNm ?? it?.STATION_NM ?? "").toLowerCase();
+            const line = String(it?.lineNum   ?? it?.LINE_NUM   ?? it?.subwayNm ?? "").toLowerCase();
+            const fr   = String(it?.frCode    ?? it?.FR_CODE    ?? "").toLowerCase();
+            return name.includes(q) || line.includes(q) || fr.includes(q);
+          });
+    });
   },
 });
 
-export const { applyLocalFilter, clearLocalFilter } = slice.actions;
-export default slice.reducer;
+export const { applyLocalFilter, clearLocalFilter } = subwaystationSlice.actions;
+export default subwaystationSlice.reducer;

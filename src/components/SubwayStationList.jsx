@@ -1,57 +1,41 @@
-import "./SubwayStationList.css";
-import Header from "./Header.jsx";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { subwaystationIndex } from "../store/thunks/subwaystationThunk.js";
-import SubwayStationSearch from "./SubwayStationSearch.jsx";
-import { selectLinesById, makeStationKey } from "../store/slices/subwaystaionListDetailSlice.js";
-import { formatNameWithLines } from "../utils/subwaystaionListDetailLines.js";
+import './SubwayStationList.css';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { subwaystationIndex } from '../store/thunks/subwaystationThunk.js';
+import StationSearch from "./StationSearchbar.jsx";
+
 
 function SubwayStationList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const subwaystation = useSelector((state) => state.subwaystation.list ?? []);
-  const linesById = useSelector(selectLinesById);
+  const subwaystation = useSelector(state => state.subwaystation.list);
 
   useEffect(() => {
     dispatch(subwaystationIndex());
-  }, [dispatch]);
+  }, [])
 
   return (
     <>
-      <Header />
-      <div className="subwaystationlist-title">
-        <h1>지하철역 리스트</h1>
+      <div className='subwaystationlist-title'><h1>지하철역 리스트</h1></div>
+      <div className='subwaystationlist-searchbar'>
+        <StationSearch />  
       </div>
-      <div className="subwaystationlist-searchbar">
-        <SubwayStationSearch />
-      </div>
-      {subwaystation.map((item) => {
-        const k = makeStationKey(item);
+      {subwaystation && subwaystation.map(item => {
         return (
-          <div
-            key={k}
-            className="subwaystationlist-item"
-            onClick={() => {
-              navigate(`/subwaydetail1/${item.STATION_CD || ""}`);
-            }}
-          >
-            <div className="subwaystationlist-listCircle">
+          <div className='subwaystationlist-item' onClick={() => { navigate('/subwaydetail1') }}>
+            <div className='subwaystationlist-listCircle'>
               <img src="/mainnavsubway.png" alt="지하철사진" />
             </div>
-            <p>
-              {formatNameWithLines(
-                item.STATION_NM || item.statnNm,
-                linesById[k] || [],
-                { max: 1, withBracket: false }
-              )}
-            </p>
+            <p>{item.STATION_NM}</p>
           </div>
-        );
-      })}
+        )
+      })
+
+      }
+
     </>
-  );
+  )
 }
 
 export default SubwayStationList;
