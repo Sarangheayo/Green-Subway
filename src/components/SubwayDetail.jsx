@@ -8,7 +8,7 @@ function SubwayDetail(){
 
     const dispatch = useDispatch();
     const stationCodeParams = useParams();
-    const stationInfo = useSelector(state => state.subwayId.subwayInfo);
+    const stationInfo = useSelector(state => state.subwayid.subwayInfo);
     const stationList = useSelector(state => state.subwaystation.list);
 
     useEffect(()=>{

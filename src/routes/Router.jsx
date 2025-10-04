@@ -4,8 +4,6 @@ import Main from "../components/Main.jsx";
 import SubwayStationList from "../components/SubwayStationList.jsx";
 import SubwayDetail from "../components/SubwayDetail.jsx";
 import MapPage from '../components/MapPage.jsx';
-import StationSearch from "../components/StationSearchbar.jsx"; // 추가
-
 
 const router = createBrowserRouter([
     {
@@ -18,10 +16,6 @@ const router = createBrowserRouter([
             {
                 path: '/subwaystationlist',
                 element: <SubwayStationList/>
-            },
-            {
-                path: '/subwaystationsearchbar',
-                element: <StationSearch />
             },
             {
                 path: '/subwaydetail/:subwayStationId',

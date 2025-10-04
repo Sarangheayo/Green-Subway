@@ -1,4 +1,4 @@
-.subwaystationlist-title {
+.subwaystationlist-title{
     width: 100%;
     height:73px;
     background-color: #54DCC1;
@@ -6,30 +6,29 @@
     justify-content: center;
     align-items: center;   
 }
-
-.subwaystationlist-title > h1 {
+.subwaystationlist-title > h1{
     font-size: 25px;
     font-weight: 600;
     color: white;
+    
 }
 
-.subwaystationlist-searchbar {
-    width: 80%;
-    height: 60px;
+.subwaystationlist-searchbar{
+    width:  80%;
+    height:60px;
     border-radius: 30px;
     background-color: white;
     margin: 40px auto;
+    
 }
-
-.subwaystationlist-searchbar>input {
+.subwaystationlist-searchbar>input{
     width:100%;
     height:100%;
     border-radius: 30px;
     padding-left: 40px;
     font-size: 20px;
 }
-
-.subwaystationlist-item {
+.subwaystationlist-item{
     width:100%;
     height: 80px;
     border:1px solid rgba(255, 255, 255,0.2);
@@ -40,13 +39,12 @@
     align-items: center;
     padding-left: 20%;
     cursor: pointer;
-}
 
-.subwaystationlist-item:hover {
+}
+.subwaystationlist-item:hover{
     transform: translateY(-10px);
 }
-
-.subwaystationlist-listCircle {
+.subwaystationlist-listCircle{
     width: 32px;
     height: 32px;
     border-radius: 32px;
@@ -55,8 +53,8 @@
     justify-content: center;
     align-items: center;
     margin : 0 20px;
-}
 
-.subwaystationlist-listCircle>img {
+}
+.subwaystationlist-listCircle>img{
     width:20px;
 }
