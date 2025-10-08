@@ -1,0 +1,70 @@
+/* 타이틀 */
+.detail-titlebox{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:80px;
+}
+.detail-colorname{
+  width:30%;
+  height:13px;
+  background-color:#54DCC1;
+}
+.detail-titlebox>h1{
+  color:#fff;
+  transform:translateY(-10px);
+}
+
+/* 칩 컨테이너: 가로 한 줄 */
+.detail-contnetswrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  width:90%;
+  max-width:560px;
+  margin:100px auto 0;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* 칩 스타일 */
+.detail-linename{
+  height:30px;
+  padding:0 12px;
+  min-width:40px;
+  background-color:#fff;
+  color:#111;
+  font-weight:600;
+  border-radius:20px;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  cursor:pointer;
+  user-select:none;
+}
+.detail-linename.active{
+  background-color:#54DCC1;
+  color:#0d1b1e;
+}
+
+/* 본문 */
+.detail-textwrap{
+  margin-top:70px;
+  color:#fff;
+}
+.detail-itemcontents{
+  font-size:23px;
+  margin:30px auto 0;
+  width:280px;
+}
+.detail-itemcontents>div{
+  display:flex;
+  margin-top:7px;
+}
+.detail-itemcontents>div>h4{ margin-left:30px; }
+.detail-itemcontents>div>p{ margin-left:40px; }
+.detail-itemcontents>div>p>span{ color:red; }

@@ -6,10 +6,10 @@ function Main () {
     return (
         <>
             <div className="main-logoImgBox">
-                <img src="/subwaylogo.png" alt="로고이미지" />
+                <img src="/base/subwaylogo.png" alt="로고이미지" />
             </div>
             <div className='main-buttonWrap'>
-                <div className='main-button' onClick={()=>{navigate(`/subwaystationlist`)}}>
+                <div className='main-button' onClick={()=>{navigate(`/stationlist`)}}>
                     <p>지하철역 검색</p>
                 </div>
                 <div className='main-button' onClick={()=>{navigate(`/mappage`)}}>

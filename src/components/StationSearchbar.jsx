@@ -1,23 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
-import { applyLocalFilter } from "../store/slices/subwaystationSlice.js";
+import { setSearch } from "../store/slices/stationSlice.js";
 import "./StationSearchbar.css";
 
-export default function StationSearch() {
+function StationSearchbar() {
+  
   const dispatch = useDispatch();
-  const searchValue = useSelector((s) => s.subwaystation.searchStationNm || "");
-
-  const onChange = (e) => {
-    const v = e.target.value.replace(/\s+/g, " ").trimStart(); // 공백 정리
-    dispatch(applyLocalFilter(v)); // 역명만 필터 
-  };
-
+  const value = useSelector((s) => s.station.searchStationNm || "");
+ 
   return (
     <input
       className="subway-search__input"
       type="text"
       placeholder="역명으로 검색 (1~9호선)"
-      value={searchValue}
-      onChange={onChange}
+      value={value}
+      onChange={(e) => dispatch(setSearch(e.target.value))}
     />
   );
 }
+
+export default StationSearchbar;

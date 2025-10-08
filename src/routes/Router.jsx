@@ -1,9 +1,11 @@
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import App from "../App";
 import Main from "../components/Main.jsx";
-import SubwayStationList from "../components/SubwayStationList.jsx";
-import SubwayDetail from "../components/SubwayDetail.jsx";
+import StationList from "../components/StationList.jsx";
+import StationDetail from "../components/StationDetail.jsx";
 import MapPage from '../components/MapPage.jsx';
+import StationSearchbar from "../components/StationSearchbar.jsx"; // 추가
+
 
 const router = createBrowserRouter([
     {
@@ -14,12 +16,20 @@ const router = createBrowserRouter([
                 element: <Main/>
             },
             {
-                path: '/subwaystationlist',
-                element: <SubwayStationList/>
+                path: '/stationlist',
+                element: <StationList/>
             },
             {
-                path: '/subwaydetail/:subwayStationId',
-                element: <SubwayDetail/>
+                path: '/stationsearchbar',
+                element: <StationSearchbar />
+            },
+            {
+                path: '/stationdetail/:stationId',
+                element: <StationDetail/>
+            },
+            {
+                path: '/stations/:stationId',
+                element: <StationDetail/>
             },
             {
                 path: '/mappage',

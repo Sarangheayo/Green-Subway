@@ -1,9 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit"
-import subwaystationReducer from './slices/subwaystationSlice.js'
-import subwatstationidReducer from './slices/subwayIdSlice.js'
+import { configureStore } from "@reduxjs/toolkit";
+import stationReducer from "./slices/stationSlice.js";
+import stationDetailReducer from "./slices/stationDetailSlice.js";
+import stationRealtimeReducer from "./slices/stationRealtimeSlice.js";
+
 export default configureStore({
-  reducer:{
-    subwaystation : subwaystationReducer,
-    subwayid : subwatstationidReducer,
-  }
+  reducer: {
+    station: stationReducer,
+    stationDetail: stationDetailReducer,
+    stationRealtime: stationRealtimeReducer,
+  },
 });
