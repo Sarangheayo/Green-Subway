@@ -25,15 +25,15 @@ function StationList() {
       </div>
 
       {(stationList || []).map((item, idx) => {
-        const name = item.name ?? '';
-        const line = String(item?.line ?? ""); 
+        const name = item.name;
+        const line = String(item.line); 
         const displayLine = /호선$/.test(line) ? line : (line ? `${line}호선` : "");
         
         return (
           <div
             key={`${name}-${line}-${idx}`}         // 중복 key 방지
             className='stationlist-item'
-            onClick={() => navigate(`/stationdetail/${name}`)}
+            onClick={() => navigate(`/stationdetail/${displayLine} ${name}`)}
           >
             <div className='stationlist-listCircle'>
               <img src="/base/mainnavsubway.png" alt="지하철 아이콘" />
