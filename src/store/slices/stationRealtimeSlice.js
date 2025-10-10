@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { stationRealtimeIndex } from "../thunks/stationRealtimeThunk.js";
+import stationRealtimeIndex from "../thunks/stationRealtimeThunk.js";
 
 const initialState = {
-  list: [],             // 실시간 도착 정보
+  list: [],      // 실시간 도착 정보
   loading: false,
   error: null,
 };
@@ -32,5 +32,7 @@ const stationRealtimeSlice = createSlice({
   },
 });
 
+
 export const { clearRealtime } = stationRealtimeSlice.actions;
 export default stationRealtimeSlice.reducer;
+

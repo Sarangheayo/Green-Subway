@@ -33,7 +33,7 @@ function StationList() {
           <div
             key={`${name}-${line}-${idx}`}         // 중복 key 방지
             className='stationlist-item'
-            onClick={() => navigate(`/stationdetail/${displayLine} ${name}`)}
+            onClick={() => navigate(`/stationdetail/${encodeURIComponent(name)}/${encodeURIComponent(displayLine)}`)}
           >
             <div className='stationlist-listCircle'>
               <img src="/base/mainnavsubway.png" alt="지하철 아이콘" />

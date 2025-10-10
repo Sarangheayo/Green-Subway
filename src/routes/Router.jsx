@@ -4,7 +4,7 @@ import Main from "../components/Main.jsx";
 import StationList from "../components/StationList.jsx";
 import StationDetail from "../components/StationDetail.jsx";
 import MapPage from '../components/MapPage.jsx';
-import StationSearchbar from "../components/StationSearchbar.jsx"; // 추가
+import StationSearchbar from "../components/StationSearchbar.jsx";
 
 
 const router = createBrowserRouter([
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
                 element: <StationSearchbar />
             },
             {
-                path: '/stationdetail/:stationId',
+                path: '/stationdetail/:name/:line',
                 element: <StationDetail/>
             },
             {
