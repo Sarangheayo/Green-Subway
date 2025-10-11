@@ -1,46 +1,36 @@
-import { createBrowserRouter,RouterProvider } from "react-router-dom";
-import App from "../App";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "../components/Main.jsx";
-import StationList from "../components/StationList.jsx";
-import StationDetail from "../components/StationDetail.jsx";
-import MapPage from '../components/MapPage.jsx';
-import StationSearchbar from "../components/StationSearchbar.jsx";
-
+import App from "../App.jsx";
+import SubwayLinePath from "../components/SubwayLinePath.jsx";
+import SubwayStationList from "../components/station/SubwayStationList.jsx";
+import SubwayStationDetail from "../components/station/SubwayStationDetail.jsx";
 
 const router = createBrowserRouter([
-    {
-        element:<App/>,
-        children : [
-            {
-                path: '/',
-                element: <Main/>
-            },
-            {
-                path: '/stationlist',
-                element: <StationList/>
-            },
-            {
-                path: '/stationsearchbar',
-                element: <StationSearchbar />
-            },
-            {
-                path: '/stationdetail/:name/:line',
-                element: <StationDetail/>
-            },
-            {
-                path: '/stations/:stationId',
-                element: <StationDetail/>
-            },
-            {
-                path: '/mappage',
-                element: <MapPage/>
-            }
-           
-        ]
-        
-    }
+  {
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Main />
+      },
+      {
+        path: 'line-diagrams',
+        element: <SubwayLinePath />
+      },
+      {
+        path: 'stations',
+        element: <SubwayStationList />
+      },
+      {
+        path: 'stations/:stationId',
+        element: <SubwayStationDetail />
+      },
+    ]
+  }
 ]);
-function Router(){
-     return <RouterProvider router={router}/>
+
+function Router() {
+  return <RouterProvider router={router} />
 }
+
 export default Router;
