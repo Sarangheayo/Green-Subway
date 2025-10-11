@@ -1,45 +1,55 @@
-import { useDispatch, useSelector } from 'react-redux';
 import './SubwayStationList.css';
-import { useEffect } from 'react';
-import { subwayStationIndex } from '../../store/thunks/SubwayStationListThunk';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { stationIndex } from '../../store/thunks/subwayStationListThunk.js';
+import StationSearchbar from "./StationSearchbar.jsx";
 
 function SubwayStationList() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const subwayList = useSelector(state => state.subwayStation.subwayList);
+  const stationList = useSelector(state => state.subwayStation.nameList);
+  const search = useSelector(state => state.subwayStation.searchStationNm);
 
-  useEffect(() => {
-    dispatch(subwayStationIndex());
-  }, [dispatch]);
+  useEffect(() => { 
+    dispatch(stationIndex(search));   //검색어로 조회
+  }, [dispatch, search]);
 
   return (
     <>
-      <div className="subway-station-list__title">
-        <h1>지하철역 리스트</h1>
-      </div>
+      <div className='SubwayStationList-title'><h1>지하철역 리스트</h1></div>
 
-      <div className="subway-station-list__searchbar">
-        {/* 검색 컴포넌트 넣어.. */}
+      <div className='SubwayStationList-searchbar'>
+        <StationSearchbar />
       </div>
-
-      <div className="subway-station-list">
-        {
-          subwayList.map(item => {
-            return(
-              <div className="subway-station-list__item" key={item.STATION_CD} onClick={() => { navigate(`/stations/${item.STATION_CD}`) }}>
-                <div className="subway-station-list__icon">
-                  <img src="/mainnavsubway.png" alt="지하철 사진" />
+      
+       <div className="SubwayStationList">
+         {(stationList || []).map((item, idx) => {
+            const name = item.name;
+            const line = String(item.line); 
+            const displayLine = /호선$/.test(line) ? line : (line ? `${line}호선` : "");
+            
+              return (
+                <div
+                  key={`${name}-${line}-${idx}`}         // 중복 key 방지
+                  className='SubwayStationList-item'
+                  onClick={() => navigate(`/stationdetail/${encodeURIComponent(name)}/${encodeURIComponent(displayLine)}`)}
+                >
+                  <div className='SubwayStationList-listCircle'>
+                    <img src="/base/mainnavsubway.png" alt="지하철 아이콘" />
+                  </div>
+                  <p>{`${displayLine} ${name}`}</p>   {/* ← N호선 N역 */}
                 </div>
-                <p>{`${item.LINE_NUM.replace(/^0+/,'')} ${item.STATION_NM}`}</p>
-              </div>
-            );
-          })
-        }
-      </div>
+              );
+        })}
+       </div>
+
+      {(!stationList || stationList.length === 0) && (
+        <p className="SubwayStationList-empty">표시할 역이 없습니다.</p>
+      )}
     </>
-  )
+  );
 }
 
 export default SubwayStationList;

@@ -1,16 +1,19 @@
-import { Outlet, ScrollRestoration } from 'react-router-dom'
+
 import './App.css'
+import { Outlet, ScrollRestoration } from 'react-router-dom'
 import Header from './components/common/Header.jsx'
+import InstallPrompt from './components/InstallPrompt.jsx'
 
 function App() {
 
   return (
     <>
-      <Header />
+      <InstallPrompt />
+      <Header/>
       <main>
-        <Outlet />
+        <Outlet/>
       </main>
-      <ScrollRestoration />
+      <ScrollRestoration></ScrollRestoration>
     </>
   )
 }
