@@ -41,7 +41,7 @@ function StationSearchbar() {
     <input
       className="subway-searchbar_input"
       type="text"
-      placeholder="역명으로 검색 (1~9호선) + enter"
+      placeholder="역명으로 검색 (1~9호선)"
       value={value}
       onChange={handleChange}  
       onCompositionStart={onCompStart}

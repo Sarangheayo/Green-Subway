@@ -43,7 +43,7 @@ function InstallPrompt() {
        deferredPrompt && 
        (
         <div className="prompt-container">
-            <p className="prompt-info">My Subway</p>
+            <p className="prompt-info">MY SUBWAY</p>
             <button className="prompt-btn" onClick={handleInstall} type="button"> Travel now </button>
         </div>
        )

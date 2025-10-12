@@ -7,6 +7,11 @@ import "./SubwayStationDetail.css";
 import { stationIndex } from "../../store/thunks/subwayStationListThunk.js";
 import { stationRealtimeIndex, firstLastByLine } from "../../store/thunks/subwayStationDetailThunk.js";
 
+// 방면 데이터 
+import stationNameDict from "../../data/stationNameDict.js";
+
+/* ========== 유틸 ========== */
+
 // "01호선" → "1호선"
 const normalizeLine = (v) => {
   const s = String(v ?? "").trim();
@@ -21,7 +26,37 @@ const toApiLine = (v) => {
 // "2호선" 등 라인 토큰 판별
 const isLineToken = (t) => /^0?[1-9]호선$/.test(String(t ?? "").trim());
 
-export default function StationDetail() {
+// 호선 → subwayId 매핑
+const LINE_TO_ID = {
+  "1호선":"1001","2호선":"1002","3호선":"1003","4호선":"1004",
+  "5호선":"1005","6호선":"1006","7호선":"1007","8호선":"1008","9호선":"1009",
+};
+
+// "방면" 라벨 계산
+function pickDirectionNames(dict, selectedLine, stationName, realtimeUp, realtimeDown){
+  const sid  = LINE_TO_ID[selectedLine] || "";
+  const list = dict.filter(d => d.subwayId === sid);
+  const idx  = list.findIndex(d => d.statnNm === stationName);
+
+  let upName   = idx > 0 ? list[idx-1]?.statnNm : list[0]?.statnNm;
+  let downName = idx >= 0 && idx < list.length-1 ? list[idx+1]?.statnNm : list.at(-1)?.statnNm;
+
+  const parseHead = (row) => {
+    const s = String(row?.trainLineNm ?? "");
+    const m = s.match(/(.+?)행/); // "구로행" → "구로"
+    return m ? m[1] : "";
+  };
+  if (!upName   && realtimeUp[0])   upName   = parseHead(realtimeUp[0])   || upName;
+  if (!downName && realtimeDown[0]) downName = parseHead(realtimeDown[0]) || downName;
+
+  return {
+    upLabel:   upName   ? `${upName} 방면`   : "상행",
+    downLabel: downName ? `${downName} 방면` : "하행",
+  };
+}
+
+/* ========== 컴포넌트 ========== */
+function SubwayStationDetail() {
   const dispatch = useDispatch();
 
   // ✅ name/line(신형), stationId(호환) 모두 받기
@@ -40,28 +75,21 @@ export default function StationDetail() {
     }
   }
 
-  // 전역 상태
+    // 전역 상태
   const nameList = useSelector((s) => s.station?.nameList ?? []);
-
-  // 실시간/첫막차
   const realtimeList = useSelector((s) => s.subwayStationDetail?.realtime ?? []);
-  const { firstUp = [], firstDown = [], dow = 1 } =
-    useSelector((s) => s.subwayStationDetail ?? {});
+  const { firstUp = [], firstDown = [], dow = 1 } = useSelector((s) => s.subwayStationDetail ?? {});
 
-  // 선택된 호선 칩
+  // 로컬 상태
   const [selectedLine, setSelectedLine] = useState("");
-
-  // 새로고침 로딩/시간
-  const [refreshing, setRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState(null);
+  const [refreshing, setRefreshing]     = useState(false);
+  const [lastUpdated, setLastUpdated]   = useState(null);
   const intervalRef = useRef(null);
 
-  // 리스트 없으면 한 번 로드(직접 진입 대비)
-  useEffect(() => {
-    if (!nameList.length) dispatch(stationIndex());
-  }, [dispatch, nameList.length]);
+  // 리스트 없으면 한 번 로드(직진입 대비)
+  useEffect(() => { if (!nameList.length) dispatch(stationIndex()); }, [dispatch, nameList.length]);
 
-  // 현재 역의 호선 칩 만들기(중복 제거 + 숫자순)
+  // 현재 역의 호선 칩(중복 제거 + 숫자순)
   const lineOptions = useMemo(() => {
     return Array.from(
       new Set(
@@ -73,7 +101,7 @@ export default function StationDetail() {
     ).sort((a, b) => parseInt(a) - parseInt(b));
   }, [nameList, stationName]);
 
-  // 초기 선택 라인: URL에서 넘어온 값 우선 → 없으면 첫 칩
+  // 초기 라인 선택
   useEffect(() => {
     if (!selectedLine) {
       if (initialLine) setSelectedLine(initialLine);
@@ -81,7 +109,7 @@ export default function StationDetail() {
     }
   }, [initialLine, lineOptions, selectedLine]);
 
-  // 실시간: 역명으로 (최초/역 바뀔 때)
+  // 실시간 호출
   const fetchRealtime = async () => {
     if (!stationName) return;
     try {
@@ -92,7 +120,7 @@ export default function StationDetail() {
       setRefreshing(false);
     }
   };
-  useEffect(() => { fetchRealtime(); }, [stationName]); // 최초 1회 + 역 변경 시
+  useEffect(() => { fetchRealtime(); }, [stationName]);
 
   // 자동 갱신(20초)
   useEffect(() => {
@@ -100,14 +128,14 @@ export default function StationDetail() {
     return () => clearInterval(intervalRef.current);
   }, [stationName]);
 
-  // 첫/막차: 선택 호선으로 (API는 "01호선" 형식)
+  // 첫/막차: 선택 호선으로 (API는 "01호선")
   useEffect(() => {
     if (selectedLine) {
       dispatch(firstLastByLine({ line: toApiLine(selectedLine), dow }));
     }
   }, [dispatch, selectedLine, dow]);
 
-  // === 화면용 가공 ===
+  /* === 화면 가공 === */
   const realtime = Array.isArray(realtimeList) ? realtimeList : [];
 
   // 선택 호선 필터: subwayNm("01호선") 또는 subwayId(1001~1009) 둘 다 대응
@@ -120,12 +148,8 @@ export default function StationDetail() {
     return fromId === selectedLine;
   });
 
-  const realtimeUp = filtered.filter(
-    (r) => String(r?.updnLine || "").includes("상행") || String(r?.updnLine || "").includes("내선")
-  );
-  const realtimeDown = filtered.filter(
-    (r) => String(r?.updnLine || "").includes("하행") || String(r?.updnLine || "").includes("외선")
-  );
+  const realtimeUp   = filtered.filter(r => String(r?.updnLine||"").includes("상행") || String(r?.updnLine||"").includes("내선"));
+  const realtimeDown = filtered.filter(r => String(r?.updnLine||"").includes("하행") || String(r?.updnLine||"").includes("외선"));
 
   const etaText = (row) => {
     const n = Number(row?.barvlDt);
@@ -137,92 +161,110 @@ export default function StationDetail() {
     }
     return "-";
   };
+  const fmtKTime = (hhmm) => (!hhmm || hhmm.length < 4) ? "-" : `${hhmm.slice(0,2)}시 ${hhmm.slice(2,4)}분`;
 
-  const fmtKTime = (hhmm) => {
-    if (!hhmm || hhmm.length < 4) return "-";
-    return `${hhmm.slice(0, 2)}시 ${hhmm.slice(2, 4)}분`;
-  };
-
-  const upRow   = Array.isArray(firstUp) ? firstUp[0] : null;
+  const upRow   = Array.isArray(firstUp)   ? firstUp[0]   : null;
   const downRow = Array.isArray(firstDown) ? firstDown[0] : null;
 
+  // 방면 라벨
+  const { upLabel, downLabel } = useMemo(
+    () => pickDirectionNames(stationNameDict, selectedLine, stationName, realtimeUp, realtimeDown),
+    [selectedLine, stationName, realtimeUp, realtimeDown]
+  );
+
+  // 화면 텍스트
+  const lastUpdatedText = lastUpdated ? `업데이트: ${lastUpdated.toLocaleTimeString()}` : "";
+  const upEta     = realtimeUp[0]   ? etaText(realtimeUp[0])   : "-";
+  const downEta   = realtimeDown[0] ? etaText(realtimeDown[0]) : "-";
+  const upFirst   = upRow   ? fmtKTime(upRow.FSTT_HRM)  : "-";
+  const upLast    = upRow   ? fmtKTime(upRow.LSTTM_HRM) : "-";
+  const downFirst = downRow ? fmtKTime(downRow.FSTT_HRM)  : "-";
+  const downLast  = downRow ? fmtKTime(downRow.LSTTM_HRM) : "-";
+
   return (
-    <>
-      {/* 제목: 모바일은 호선 윗줄 / 역명 아랫줄 */}
+    <div className="detail-root" style={{ '--bottom-inset': '150px' }}>
+
+
+      {/* 상단 타이틀 */}
       <div className="detail-titlebox">
-        <div className="detail-colorname" />
+        <div className="detail-colorbar" />
         <div className="detail-titlestack">
-          <div className="detail-title-line">
-            {selectedLine || (lineOptions[0] ?? "")}
-          </div>
-          <h1 className="detail-title-name">
-            {stationName || "역 불러오는 중..."}
-          </h1>
+          <div className="detail-title-line">{selectedLine || lineOptions[0] || ""}</div>
+          <h1 className="detail-title-name">{stationName || "역 불러오는 중..."}</h1>
+          {selectedLine && <div className="detail-linechip">{normalizeLine(selectedLine)}</div>}
         </div>
-        <div className="detail-colorname" />
+        <div className="detail-colorbar" />
       </div>
 
-      {/* 라인 칩 + 새로고침 버튼 */}
-      <div className="detail-contnetswrap">
-        {lineOptions.map((ln) => (
-          <button
-            key={ln}
-            type="button"
-            className={`detail-linename ${selectedLine === ln ? "active" : ""}`}
-            onClick={() => setSelectedLine(ln)}
-          >
-            {ln}
-          </button>
-        ))}
+        {/* 칩만 표시 */}
+        <div className="detail-contnetswrap">
+          <div className="detail-chiprow">
+            {lineOptions.map((ln) => (
+              <button
+                key={ln}
+                type="button"
+                className={`detail-linename ${selectedLine===ln ? "active" : ""}`}
+                onClick={()=>setSelectedLine(ln)}
+              >
+                {ln}
+              </button>
+            ))}
+          </div>
+        </div>
 
+      {/* 상/하행 섹션 */}
+      <div className="detail-sections">
+        {/* 상행 */}
+        <section className="detail-section">
+          <div className="detail-divider">
+            <span className="detail-line" />
+            <div className="detail-direction-badge">{upLabel}</div>
+            <span className="detail-line none" />
+          </div>
+
+          <div className="detail-card">
+            <div className="detail-row">
+              <h3>상행</h3>
+              <p><span className="detail-eta">{upEta}</span> 도착</p>
+            </div>
+            <div className="detail-row"><h4>첫차</h4><p>{upFirst}</p></div>
+            <div className="detail-row"><h4>막차</h4><p>{upLast}</p></div>
+          </div>
+        </section>
+
+        {/* 하행 */}
+        <section className="detail-section">
+          <div className="detail-divider">
+            <span className="detail-line none" />
+            <div className="detail-direction-badge">{downLabel}</div>
+            <span className="detail-line" />
+          </div>
+
+          <div className="detail-card">
+            <div className="detail-row">
+              <h3>하행</h3>
+              <p><span className="detail-eta">{downEta}</span> 도착</p>
+            </div>
+            <div className="detail-row"><h4>첫차</h4><p>{downFirst}</p></div>
+            <div className="detail-row"><h4>막차</h4><p>{downLast}</p></div>
+          </div>
+        </section>
+
+        {/* 하단 플로팅 새로고침 버튼 */}
         <button
-          type="button"
-          className={`detail-refresh ${refreshing ? "loading" : ""}`}
+          className="refresh-btn"
           onClick={fetchRealtime}
-          disabled={refreshing}
-          aria-live="polite"
         >
-          {refreshing ? "갱신중..." : "실시간 새로고침"}
+          <img
+            className="refresh-btn-img"
+            src="/base/refresh-btn.png"
+            alt="새로고침"
+          />
         </button>
       </div>
 
-      {/* 갱신 시각 */}
-      <div className="detail-updated">
-        {lastUpdated ? `업데이트: ${lastUpdated.toLocaleTimeString()}` : ""}
-      </div>
-
-      {/* 상/하행 + 첫막차(유지) */}
-      <div className="detail-textwrap">
-        <div className="detail-itemcontents">
-          <div>
-            <h3>상행</h3>
-            <p><span>{realtimeUp[0] ? etaText(realtimeUp[0]) : "-"}</span> 도착</p>
-          </div>
-          <div>
-            <h4>첫차</h4>
-            <p>{upRow ? fmtKTime(upRow.FSTT_HRM) : "-"}</p>
-          </div>
-          <div>
-            <h4>막차</h4>
-            <p>{upRow ? fmtKTime(upRow.LSTTM_HRM) : "-"}</p>
-          </div>
-        </div>
-
-        <div className="detail-itemcontents">
-          <div>
-            <h3>하행</h3>
-            <p><span>{realtimeDown[0] ? etaText(realtimeDown[0]) : "-"}</span> 도착</p>
-          </div>
-          <div>
-            <h4>첫차</h4>
-            <p>{downRow ? fmtKTime(downRow.FSTT_HRM) : "-"}</p>
-          </div>
-          <div>
-            <h4>막차</h4>
-            <p>{downRow ? fmtKTime(downRow.LSTTM_HRM) : "-"}</p>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
+
+export default SubwayStationDetail;
