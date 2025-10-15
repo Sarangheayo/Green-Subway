@@ -28,15 +28,19 @@ export function normalizeBigdataToStations(rows) {
     );
 }
 
-export function findStationByName(stations, q) {
-  if (!q) return null;
-  const key = stripParen(q);
-  // 1) 완전일치
-  let s = stations.find((x) => x._nameKey === key);
-  if (s) return s;
-  // 2) 부분일치
-  s = stations.find((x) => x._nameKey.includes(key));
-  return s || null;
+// 안전한 역 검색: 인자 방어 + 필드 방어
+export function findStationByName(stations = [], keyword = "") {
+  const list = Array.isArray(stations) ? stations : [];
+  const q = String(keyword ?? "").trim().toLowerCase();
+  if (!q || list.length === 0) return null;
+
+  for (const s of list) {
+    const name = String(
+      s?.name ?? s?.stnKrNm ?? s?.STN_KR_NM ?? ""
+    ).toLowerCase();
+    if (name && name.includes(q)) return s;
+  }
+  return null;
 }
 
 export function findFirstList(obj) {

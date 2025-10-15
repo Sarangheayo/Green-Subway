@@ -1,13 +1,16 @@
-/* 페이지 루트: 가운데 정렬 + 안전 여백 + 폰트 컬러 */
-.linelist-root{
-  color:#fff;                 /* 요청: 흰색 */
-  width:min(560px, 100%);     /* 작은 화면에서 안 튀어나오게 */
-  margin-inline:auto;
-  padding:16px;
-  padding-bottom: max(20px, env(safe-area-inset-bottom));
-  box-sizing:border-box;
-}
+/* src/components/lineInfo/SubwayLineList.css */
+.lineList-wrap { max-width: 980px; margin: 0 auto; padding: 16px; }
+.lineList-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.ll-back { border:1px solid #e5e7eb; background:#fff; border-radius:8px; padding:8px 10px; cursor:pointer; }
+.ll-title { display:flex; align-items:center; gap:8px; }
+.ll-title h1 { font-size:20px; margin:0; }
+.ll-chip { font-size:12px; padding:4px 8px; border:1px solid #cbd5e1; border-radius:999px; background:#f8fafc; }
 
+.lineList-main { display:grid; grid-template-columns: 1fr; gap:12px; }
+.ll-card { border:1px solid #e5e7eb; border-radius:12px; background:#fff; padding:14px; }
+.ll-card h2 { font-size:16px; margin:0 0 8px; }
+
+/* ====== 네가 원하는 이름들(alias) ====== */
 .linelist-title{
   font-weight:800;
   font-size:18px;
@@ -15,79 +18,40 @@
   line-height:1.25;
 }
 
-/* 호선 카드 목록: 간격 ↑ */
+/* 목록 공통(기존 .ll-ul도 함께 적용) */
+.ll-ul,
 .linelist-ul{
   list-style:none;
-  padding:0;
-  margin:10px 0;
-  display:grid;
-  gap:24px;                   /* 요청: 아이템 간 갭 증가 */
-}
-
-/* 호선 카드: 좌우 패딩 + 내용이 너무 좌로 붙지 않게 */
-.linelist-item{
-  display:grid;
-  grid-template-columns: auto 1fr auto;
-  align-items:center;
-  column-gap:14px;
-  padding: clamp(14px, 3.8vw, 20px);  /* 반응형 패딩 */
-  border:1.5px solid #464a55;
-  border-radius:18px;
-  background:transparent;
-  cursor:pointer;
-  box-sizing:border-box;
-}
-
-/* 칩/텍스트/캐럿 */
-.line-chip{
-  display:inline-block;
-  background:var(--accent, #54dcc1);
-  color:var(--bg, #2c313b);
-  border-radius:999px;
-  padding:6px 12px;           /* 살짝 컴팩트 */
-  font-weight:800;
-  line-height:1;
-}
-.line-name{ opacity:.95; }
-.caret{ opacity:.7; justify-self:end; }
-
-/* 펼친 영역: 갭 ↑, 좌우 패딩 확보 */
-.line-expanded{
-  list-style:none;
-  padding: 10px 2px 0;        /* 좌측 살짝 띄움 */
   margin:0;
+  padding:0;
   display:grid;
-  gap:18px;                   /* 요청: 카드 사이 간격 더 띄움 */
+  grid-auto-rows:minmax(44px, auto);
+  gap:10px;                /* 카드 사이 간격 ↑ */
 }
 
-/* 역 카드: 좌우 패딩 ↑로 '너무 좌측' 보정 */
-.station-row{ padding:0 2px; }
-.station-row__inner{
-  border:1.5px solid #464a55;
-  border-radius:20px;
-  padding: clamp(16px, 3.6vw, 22px) clamp(18px, 4vw, 26px); /* 반응형 내부 패딩 */
-  background:transparent;
-  cursor:pointer;
-  box-sizing:border-box;
+/* 항목 카드 스타일 */
+.ll-ul li,
+.linelist-ul li{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 12px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  background:#f9fafb;
 }
 
-/* 역 카드 텍스트 */
-.station-row__name{
-  font-weight:800;
-  margin-bottom:8px;          /* 이름과 메타 사이 간격 */
+/* 좌·우 텍스트 정렬 예쁘게 */
+.ll-ul li .left,
+.linelist-ul li .left{
+  font-weight:600;
 }
-.station-row__addr,
-.station-row__tel{
-  font-size:14px;
-  color:#c8cdd3;              /* 흰색 대비로 가독성 ↑, 배경색은 유지 */
-  line-height:1.35;
+.ll-ul li .right,
+.linelist-ul li .right{
+  font-size:12px;
+  color:#6b7280;
 }
 
-/* 아주 작은 화면 대응 */
-@media (max-width: 360px){
-  .linelist-root{ padding:12px; }
-  .linelist-ul{ gap:20px; }
-  .linelist-item{ padding:12px 14px; }
-  .station-row__inner{ padding:14px 18px; }
-  .station-row__addr, .station-row__tel{ font-size:13px; }
-}
+/* 보조 텍스트 */
+.ll-muted { color:#6b7280; margin:4px 0 0; }
