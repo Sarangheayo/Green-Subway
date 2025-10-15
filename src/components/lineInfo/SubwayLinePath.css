@@ -1,29 +1,125 @@
-.subway-line-path{
-  width:100%;
+
+.subway-container{
+  --gap:16px;
+  --left-min:280px;
+  --left-max:360px;
+  --map-h: clamp(380px, 62vh, 760px);
+
   display:grid;
-  place-items:center;
+  grid-template-columns: minmax(var(--left-min), var(--left-max)) minmax(0,1fr);
+  gap:var(--gap);
+  width:100%;
   padding:16px;
+  box-sizing:border-box;
+  align-items:start;
+  container-type:inline-size; /* 컨테이너 쿼리 */
 }
 
-.line-map{
-  position:relative;
-  width:min(500px, 100%);
+/* Left */
+.subway-left{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  min-height:var(--map-h);
+}
+
+.subway-tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+.subway-tab{
+  flex:0 0 auto;
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid #e5e7eb;
+  background:#f9fafb;
+  font-weight:600;
+  cursor:pointer;
+}
+.subway-tab.active{ background:#e8f0ff; border-color:#c7d2fe; }
+.subway-tab:disabled{ opacity:.5; cursor:not-allowed; }
+
+.subway-search{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+}
+.subway-search input{
+  flex:1 1 auto;
+  min-width:0;
+  padding:10px 12px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  outline:none;
+}
+.subway-search button{
+  padding:10px 12px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  background:#fff;
   cursor:pointer;
 }
 
-.line-map__img{
-  display:block;
-  width:100%;
-  height:auto;
-  border:1px solid #ccc;
-  border-radius:12px; /* 선택 */
+.subway-results{
+  flex:1 1 auto;
+  overflow:auto;
+  border-top:1px solid #f3f4f6;
+  padding-top:8px;
+  min-height:0;
+}
+.subway-empty{
+  padding:24px 8px;
+  color:#9ca3af;
+  text-align:center;
 }
 
-/* 이미지 전체에 클릭 히트박스 보장 */
-.line-map__overlay{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:transparent;
-  pointer-events:none; /* onClick은 부모(.line-map)에 걸려 있으니 none */
+.subway-item{
+  padding:10px 8px;
+  border-radius:8px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.subway-item:hover{ background:#f3f4f6; }
+.subway-item-name{ font-weight:700; }
+.subway-item-line{ font-size:12px; color:#6b7280; }
+
+/* Right */
+.subway-map{
+  position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid #e5e7eb;
+  min-width:0;
+}
+
+/* Overlay */
+.subway-overlay{
+  padding:10px 12px;
+  background:#fff;
+  color:#000;
+  border-radius:8px;
+  box-shadow:0 4px 14px rgba(0,0,0,.2);
+  max-width:240px;
+  font-size:13px;
+  line-height:1.4;
+}
+.subway-ov-title{ font-weight:700; margin-bottom:4px; }
+.subway-ov-addr{ opacity:.85; }
+
+/* 모바일: 세로 스택 (컨테이너 쿼리) */
+@container (max-width: 720px){
+  .subway-container{
+    grid-template-columns: 1fr;
+  }
+  .subway-left{
+    min-height:auto;
+  }
 }

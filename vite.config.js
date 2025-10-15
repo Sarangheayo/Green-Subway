@@ -18,9 +18,9 @@ export default defineConfig({
         '/base/subwaylogo.png',
       ],
       manifest: {
-        name: 'My Subway',  // PWA 애플리케이션의 이름 (설치 배너에 표시)
-        short_name: 'My Subway', // 홈 화면 아이콘 아래에 표시될 이름
-        description: 'My Subway', // 앱 설명
+        name: 'SEOULWAY',  // PWA 애플리케이션의 이름 (설치 배너에 표시)
+        short_name: 'SEOULWAY', // 홈 화면 아이콘 아래에 표시될 이름
+        description: 'SEOULWAY 이용해 주셔서 감사합니당 :) ', // 앱 설명
         theme_color: '#54DCC1', // 브라우저 UI 테마 색상
         background_color: '#2c313b', //기본 배경색
         lang: 'ko',                     // 앱의 언어 설정 (기본 언어)
@@ -52,4 +52,26 @@ export default defineConfig({
       }
     })
   ],
+
+  //기존 설정은 그대로 두고 프록시만 추가해서 CORS랑 리스트 “No data” 문제 해결
+  
+  server: {
+    proxy: {
+      // 서울 빅데이터
+      '/bigdata': {
+        target: 'https://t-data.seoul.go.kr/apig/apiman-gateway/tapi',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/bigdata/, ''),
+    },
+
+     // 서울 열린데이터(리스트용)
+       '/opendata': {
+        target: 'http://openapi.seoul.go.kr:8088',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (p) => p.replace(/^\/opendata/, ''),
+      },
+  },
+ },
 })
