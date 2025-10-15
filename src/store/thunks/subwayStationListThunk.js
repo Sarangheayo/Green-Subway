@@ -7,7 +7,7 @@ const stationIndex = createAsyncThunk(
   async (s = "") => {
   
     const url = `${import.meta.env.VITE_OPEN_API_BASE_URL}${import.meta.env.VITE_OPEN_API_KEY}${import.meta.env.VITE_OPEN_API_TYPE}${import.meta.env.VITE_OPEN_API_SERVICE_NAME}/1/799`
-    // const url=`http://openAPI.seoul.go.kr:8088/424a49475a6d696a363461576f5178/json/SearchInfoBySubwayNameService/1/799`
+    // const url=`http://openAPI.seoul.go.kr:8088/566b5141456d7975313875516b6752/json/SearchInfoBySubwayNameService/1/799`
     console.log(url);
     const response = await axios.get(url);
 
@@ -58,7 +58,7 @@ const stationIndex = createAsyncThunk(
      return {
       listPresent, // 전체 원본 데이터
       nameList, // 1~9호선 정규화 리스트
-   };  
+    };  
   }
 );
 

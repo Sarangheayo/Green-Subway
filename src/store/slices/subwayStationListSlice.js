@@ -4,18 +4,20 @@ import { stationIndex } from "../thunks/subwayStationListThunk.js";
 const initialState = {
   nameList: [],
   listPresent: [],
-  searchStationNm: "",
+  // searchStationNm: "",
   loading: false,
   error: null,
 };
+
+
 
 const subwayStationListSlice = createSlice({
   name: "subwayStationList",
   initialState,
   reducers: {
-    setSearch( state, { payload }) {
-      state.searchStationNm = payload ?? "";
-    },
+    // setSearch( state, { payload }) {
+    //   state.searchStationNm = payload ?? "";
+    // },
   },
   extraReducers: (builder) => {
     builder.addCase(stationIndex.fulfilled, (state, { payload }) => {

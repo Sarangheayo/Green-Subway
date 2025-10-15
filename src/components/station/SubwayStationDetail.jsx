@@ -12,7 +12,27 @@ import stationNameDict from "../../data/stationNameDict.js";
 
 /* ========== 유틸 ========== */
 
-// "01호선" → "1호선"
+
+
+// **bj T 코드 리뷰 -> 참고하세요 디테일 수정하세요오오오옹
+// useEffect(() => {
+//   // 실시간 도착정보 조회
+//   // 첫차 막차 정보 조회
+//   // 파싱한 역정보
+//   // 인터벌
+
+//   return 인터벌삭제
+// }, []);
+
+
+
+
+/**
+ * 호선명을 정규화합니다. 예) "01호선" → "1호선", "2호선" → "2호선", "경의선" → "경의선"
+ * 
+ * @param {string} v - 호선명
+ * @returns {string} - 정규화된 호선명
+ */
 const normalizeLine = (v) => {
   const s = String(v ?? "").trim();
   const m = s.match(/^0?([1-9])호선$/);
@@ -189,28 +209,11 @@ function SubwayStationDetail() {
       <div className="detail-titlebox">
         <div className="detail-colorbar" />
         <div className="detail-titlestack">
-          <div className="detail-title-line">{selectedLine || lineOptions[0] || ""}</div>
           <h1 className="detail-title-name">{stationName || "역 불러오는 중..."}</h1>
           {selectedLine && <div className="detail-linechip">{normalizeLine(selectedLine)}</div>}
         </div>
         <div className="detail-colorbar" />
       </div>
-
-        {/* 칩만 표시 */}
-        <div className="detail-contnetswrap">
-          <div className="detail-chiprow">
-            {lineOptions.map((ln) => (
-              <button
-                key={ln}
-                type="button"
-                className={`detail-linename ${selectedLine===ln ? "active" : ""}`}
-                onClick={()=>setSelectedLine(ln)}
-              >
-                {ln}
-              </button>
-            ))}
-          </div>
-        </div>
 
       {/* 상/하행 섹션 */}
       <div className="detail-sections">
@@ -250,17 +253,7 @@ function SubwayStationDetail() {
           </div>
         </section>
 
-        {/* 하단 플로팅 새로고침 버튼 */}
-        <button
-          className="refresh-btn"
-          onClick={fetchRealtime}
-        >
-          <img
-            className="refresh-btn-img"
-            src="/base/refresh-btn.png"
-            alt="새로고침"
-          />
-        </button>
+    
       </div>
 
     </div>

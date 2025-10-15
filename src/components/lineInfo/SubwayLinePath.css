@@ -1,0 +1,29 @@
+.subway-line-path{
+  width:100%;
+  display:grid;
+  place-items:center;
+  padding:16px;
+}
+
+.line-map{
+  position:relative;
+  width:min(500px, 100%);
+  cursor:pointer;
+}
+
+.line-map__img{
+  display:block;
+  width:100%;
+  height:auto;
+  border:1px solid #ccc;
+  border-radius:12px; /* 선택 */
+}
+
+/* 이미지 전체에 클릭 히트박스 보장 */
+.line-map__overlay{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:transparent;
+  pointer-events:none; /* onClick은 부모(.line-map)에 걸려 있으니 none */
+}
