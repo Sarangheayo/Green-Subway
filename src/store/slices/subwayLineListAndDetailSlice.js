@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { listPresentAndNameListIndex } from "../thunks/subwayLineListThunk.js";
-import { listSubwayGeom1to9Index } from "../thunks/subwayLineListThunk.js";
+import { listPresentAndNameListIndex, listSubwayGeom1to9Index } from "../thunks/subwayLineListAndDetailThunk.js";
  
 const initialState = {
   loading: false,
@@ -39,6 +38,8 @@ const subwayLineListSlice = createSlice({
 
 export const { setQuery } = subwayLineListSlice.actions;
 export default subwayLineListSlice.reducer;
+
+
 
 
 const geomInitialState = {

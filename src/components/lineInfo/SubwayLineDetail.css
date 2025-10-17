@@ -1,0 +1,199 @@
+/* Subway Line Detail – Responsive (no CSS variables) */
+
+/* Root wrapper */
+.sld {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+  color: #f5f7fb;
+}
+
+/* Title */
+.sld-title {
+  display: grid;
+  gap: 10px;
+  margin: 6px 0 18px;
+}
+.sld-title__text {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.sld-title__name {
+  margin: 0;
+  font-size: clamp(22px, 5vw, 28px);
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+.sld-title__pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(84, 220, 193, 0.20);
+  color: #54DCC1;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid #54DCC1;
+}
+.sld-title__bar {
+  width: 120px;
+  height: 8px;
+  border-radius: 6px;
+  background: #54DCC1;
+  box-shadow: 0 1px 0 rgba(0,0,0,.15) inset;
+}
+
+/* Card */
+.sld-card {
+  background: #353b46;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  padding: 14px;
+  margin: 14px 0;
+}
+.sld-card__hd {
+  font-weight: 800;
+  letter-spacing: .2px;
+  margin-bottom: 10px;
+  opacity: .95;
+}
+
+/* Key/Value small grid */
+.sld-station__grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 520px) {
+  .sld-station__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.sld-kv {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 10px;
+}
+.sld-kv__k { font-size: 12px; color: #b8c0cc; }
+.sld-kv__v { font-size: 14px; }
+
+/* Feature grid (편의시설) */
+.sld-facGrid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+.sld-fac {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.02);
+}
+.sld-fac__ico {
+  grid-row: span 2;
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
+  font-size: 15px;
+}
+.sld-fac__label { font-weight: 700; font-size: 13px; }
+.sld-fac__status { font-size: 12px; color: #b8c0cc; }
+
+/* 상태별 강조 */
+.sld-fac.on {
+  border-color: rgba(84,220,193,.55);
+  background: rgba(84,220,193,.08);
+}
+.sld-fac.on .sld-fac__status { color: #54DCC1; }
+.sld-fac.off { opacity: .55; }
+.sld-fac.unk { opacity: .8; }
+
+.sld-code {
+  background: rgba(255,255,255,.06);
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+.sld-hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #b8c0cc;
+}
+
+/* A11y summary */
+.sld-a11y__grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+.sld-a11y__item {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.02);
+  border: 1px dashed rgba(255,255,255,.12);
+}
+.sld-a11y__k { font-size: 12px; color: #b8c0cc; margin-bottom: 4px; }
+.sld-a11y__v { font-weight: 800; }
+.sld-a11y__item.ok {
+  border-style: solid;
+  border-color: rgba(84,220,193,.55);
+  background: rgba(84,220,193,.08);
+  color: #54DCC1;
+}
+.sld-a11y__item.no { opacity: .6; }
+.sld-muted { margin-top: 8px; font-size: 12px; color: #b8c0cc; }
+
+/* Exit / Map placeholders */
+.sld-empty {
+  padding: 16px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  color: #b8c0cc;
+}
+.sld-mapPh { display: grid; gap: 10px; }
+.sld-mapPh__map {
+  height: clamp(180px, 40vw, 260px);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.08) 25%, transparent 25%) -10px 0/20px 20px,
+    linear-gradient(225deg, rgba(255,255,255,.08) 25%, transparent 25%) -10px 0/20px 20px,
+    linear-gradient(45deg, rgba(255,255,255,.08) 25%, transparent 25%) 0 0/20px 20px,
+    linear-gradient(315deg, rgba(255,255,255,.08) 25%, transparent 25%) 0 0/20px 20px,
+    rgba(255,255,255,.03);
+  display: grid; place-items: center;
+  color: #b8c0cc;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+/* Footer */
+.sld-footer {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 22px 0 10px;
+  color: #b8c0cc;
+}
+.sld-footer__brand { font-weight: 800; letter-spacing: .3px; color: #f5f7fb; }
+.sld-footer__btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 18px;
+  background: #54DCC1;
+  color: #0f141a;
+  font-weight: 800;
+  cursor: pointer;
+  min-width: 180px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.18);
+}
+.sld-footer__btn:active { transform: translateY(1px); opacity: .95; }
+.sld-footer__copy { font-size: 12px; }

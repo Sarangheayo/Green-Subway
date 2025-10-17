@@ -1,12 +1,12 @@
 // "9호선(연장)" -> "9호선"
-const normalizeLine = (line) => {
+export const normalizeLine = (line) => {
   const t = String(line ?? "");
   const m = t.match(/([1-9])\s*호선/);
   return m ? `${m[1]}호선` : "";
 };
 
 // "청량리(서울시립대입구)" -> "청량리" (매칭 용)
-const stripParen = (name) => String(name ?? "").replace(/\(.*?\)/g, "").trim();
+export const stripParen = (name) => String(name ?? "").replace(/\(.*?\)/g, "").trim();
 
 // JSON 배열 -> [{id,name,line,lat,lng,address?}]
 export function normalizeBigdataToStations(rows) {

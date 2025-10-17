@@ -3,10 +3,10 @@ import App from "../App";
 import Main from "../components/Main.jsx";
 import SubwayStationList from "../components/station/SubwayStationList.jsx";
 import SubwayStationDetail from "../components/station/SubwayStationDetail.jsx"
-import SubwayLinePath from '../components/lineInfo/SubwayLinePath.jsx';
+import SubwayLineList from '../components/lineInfo/SubwayLineList.jsx';
 import StationSearchbar from "../components/station/StationSearchbar.jsx";
 import NotFound from "../components/errors/NotFound.jsx";
-import SubwayLineList from "../components/lineInfo/SubwayLineList.jsx";
+import SubwayLineDetail from "../components/lineInfo/SubwayLineDetail.jsx";
 
 const router = createBrowserRouter([
     {
@@ -18,15 +18,15 @@ const router = createBrowserRouter([
         },
         {
           path: 'line-diagrams',
-          element: <SubwayLinePath />
+          element: <SubwayLineList />
         },
         {
           path: "line-list",
-          element: <SubwayLineList /> 
+          element: <SubwayLineDetail /> 
         },
         {
           path: "stationlist",
-          element: <SubwayStationList />
+          element: <SubwayStationList /> 
         },
         {
           path: "stationsearchbar",
@@ -34,10 +34,6 @@ const router = createBrowserRouter([
         },
         {
           path: "stationdetail/:name/:line",
-          element: <SubwayStationDetail />
-        },
-        {
-          path: "stations/:stationId",
           element: <SubwayStationDetail />
         },
         {

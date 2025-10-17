@@ -52,26 +52,4 @@ export default defineConfig({
       }
     })
   ],
-
-  //기존 설정은 그대로 두고 프록시만 추가해서 CORS랑 리스트 “No data” 문제 해결
-  
-  server: {
-    proxy: {
-      // 서울 빅데이터
-      '/bigdata': {
-        target: 'https://t-data.seoul.go.kr/apig/apiman-gateway/tapi',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/bigdata/, ''),
-    },
-
-     // 서울 열린데이터(리스트용)
-       '/opendata': {
-        target: 'http://openapi.seoul.go.kr:8088',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (p) => p.replace(/^\/opendata/, ''),
-      },
-  },
- },
 })
